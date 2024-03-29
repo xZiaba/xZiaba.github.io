@@ -1,31 +1,103 @@
-<script setup></script>
+<script>
+import { ref } from "vue";
+export default {
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
+  methods: {
+    kontaktClick() {
+      this.$refs.footerTarget.scrollIntoView({ behavior: "smooth" });
+    },
+    omnieClick() {
+      this.$refs.omnieTarget.scrollIntoView({ behavior: "smooth" });
+    },
+    cennikClick() {
+      this.$refs.cennikTarget.scrollIntoView({ behavior: "smooth" });
+    },
+    homeClick() {
+      this.$refs.homeTarget.scrollIntoView({ behavior: "smooth" });
+    },
+    created() {},
+  },
+};
+</script>
 
 <template>
-  <header class="bg-black shadow-sm">
-    <div class="flex items-center justify-end mx-4 ml-9">
-      <img
-        class="w-16 mx-auto my-2 items-center cursor-pointer"
-        src="./assets/waligora-logo.png"
-      />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6 stroke-white cursor-pointer"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          class=""
+  <header class="fixed top-0 w-full bg-black shadow-sm z-50">
+    <div>
+      <div class="flex items-center justify-end mx-4 ml-9">
+        <img
+          @click="homeClick()"
+          class="w-16 mx-auto my-2 items-center cursor-pointer"
+          src="./assets/waligora-logo.png"
         />
-      </svg>
+        <svg
+          @click="isOpen = !isOpen"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 stroke-white cursor-pointer"
+        >
+          <path
+            v-if="!isOpen"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            class=""
+          />
+          <path
+            v-if="isOpen"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </div>
+      <div
+        :class="isOpen ? 'block' : 'hidden'"
+        class="text-white bg-neutral-900"
+      >
+        <a
+          @click="
+            homeClick();
+            isOpen = !isOpen;
+          "
+          class="block text-center py-6 hover:bg-neutral-800"
+          >Home</a
+        >
+        <a
+          @click="
+            omnieClick();
+            isOpen = !isOpen;
+          "
+          class="block text-center py-6 hover:bg-neutral-800"
+          >O nas</a
+        >
+        <a
+          @click="
+            cennikClick();
+            isOpen = !isOpen;
+          "
+          class="block text-center py-6 hover:bg-neutral-800"
+          >Cennik</a
+        >
+        <a
+          @click="
+            kontaktClick();
+            isOpen = !isOpen;
+          "
+          class="block text-center py-6 hover:bg-neutral-800"
+          >Kontakt</a
+        >
+      </div>
     </div>
   </header>
 
-  <section class="">
+  <section ref="homeTarget" class="mt-20">
     <div class="relative">
       <img
         class="min-w-screen object-cover"
@@ -41,6 +113,7 @@
           w mieście
         </h1>
         <div
+          @click="cennikClick()"
           class="absolute top-64 inset-0 flex items-center justify-center text-white font-semibold text-xl drop-shadow-md"
         >
           <p class="p-2 px-9 border-solid border-2 border-white cursor-pointer">
@@ -50,17 +123,17 @@
       </div>
     </div>
   </section>
-  <article class="">
+  <article ref="omnieTarget" class="">
     <h1 class="font-bold text-2xl py-24 mx-8 text-center drop-shadow-md">
       - O mnie -
     </h1>
-    <h1 class="m-5 text-xl font-semibold text-center px-9 mb-24 drop-shadow-md">
+    <h1 class="m-5 text-xl font-semibold text-center px-9 drop-shadow-md">
       Cześć jestem Karol, jestem barbrem od x lat, możesz oczekiwać ode mnie
       solidnego cięcia
     </h1>
   </article>
-  <section>
-    <p class="font-bold text-2xl py-5 pb-24 mx-8 text-center drop-shadow-md">
+  <section ref="cennikTarget">
+    <p class="font-bold text-2xl py-24 mx-8 text-center drop-shadow-md">
       - Nasza oferta -
     </p>
     <div>
@@ -97,10 +170,7 @@
   <section class="relative">
     <img src="./assets/placeholder2.jpg" />
     <div class="absolute inset-0 bottom-20 flex items-center justify-center">
-      <h2 class="text-white shadow-md text-4xl">Godziny otwarcia</h2>
-    </div>
-    <div class="absolute inset-0 bottom-20 flex items-center justify-center">
-      <h2 class="text-white shadow-md text-4xl">Godziny otwarcia</h2>
+      <h2 class="text-white drop-shadow-md text-4xl">Godziny otwarcia</h2>
     </div>
   </section>
   <section class="">
@@ -118,7 +188,7 @@
       ></iframe>
     </div>
   </section>
-  <footer class="bg-black">
+  <footer ref="footerTarget" class="bg-black">
     <img src="./assets/waligora-logo.png" class="w-32 m-auto" />
     <div class="text-white mx-5">
       <div class="flex">
